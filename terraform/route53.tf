@@ -4,7 +4,7 @@ resource "aws_route53_zone" "main" {
 
 resource "aws_route53_record" "strapi" {
   zone_id = Z06607023RJWXGXD2ZL6M
-  name    = "togaruashok1996-Ecs"  # Replace with your desired subdomain
+  name    = "togaruashok1996"  # Replace with your desired subdomain
   type    = "A"
   ttl     = 300
   records = [aws_eip.strapi.public_ip]
