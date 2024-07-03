@@ -1,8 +1,3 @@
-# Existing VPC
-data "aws_vpc" "default" {
-  default = true
-}
-
 # Subnet in existing VPC
 resource "aws_subnet" "this" {
   vpc_id            = data.aws_vpc.default.id
