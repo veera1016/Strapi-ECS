@@ -50,6 +50,5 @@ resource "aws_iam_role" "ecs_execution_role" {
 
 resource "aws_iam_role_policy_attachment" "ecs_execution_policy" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
-aws_ecs_task_definition.strapiTD.family
   role     = aws_iam_role.ecs_execution_role.name
 }
