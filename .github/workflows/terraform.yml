@@ -29,6 +29,10 @@ jobs:
         run: terraform init
         working-directory: ./terraform  # Update this path if necessary
 
-      - name: Apply Terraform
-        run: terraform apply -auto-approve
+      #- name: Apply Terraform
+        #run: terraform apply -auto-approve
+        #working-directory: ./terraform  # Update this path if necessary
+
+      - name: Initialize Terraform
+        run: terraform destroy
         working-directory: ./terraform  # Update this path if necessary
