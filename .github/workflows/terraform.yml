@@ -3,7 +3,7 @@ name: Terraform Apply
 on:
   push:
     branches:
-      - master
+      - main
       
 jobs:
   terraform:
@@ -29,7 +29,7 @@ jobs:
         run: terraform init
         working-directory: ./terraform  # Update this path if necessary
 
-      - name: Terraform destroy
-        run: terraform destroy
+      - name: Apply Terraform
+        run: terraform apply -auto-approve
         working-directory: ./terraform  # Update this path if necessary
 
