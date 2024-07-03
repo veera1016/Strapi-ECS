@@ -3,20 +3,22 @@ resource "aws_ecs_cluster" "this" {
   name = "Ashok-strapi-cluster"
 }
 
-# Data sources for existing IAM roles
+# ECS Execution Role (Checking if it exists)
 data "aws_iam_role" "ecs_execution_role" {
   name = "ecs_execution_role"
-  depends_on = [aws_iam_role.ecs_execution_role]
+  # Use `ignore_errors` to continue if the role does not exist
+  ignore_errors = true
 }
 
+# ECS Task Role (Checking if it exists)
 data "aws_iam_role" "ecs_task_role" {
   name = "ecs_task_role"
-  depends_on = [aws_iam_role.ecs_task_role]
+  ignore_errors = true
 }
 
-# ECS Execution Role
+# ECS Execution Role (Creating if it doesn't exist)
 resource "aws_iam_role" "ecs_execution_role" {
-  count = length(data.aws_iam_role.ecs_execution_role.id) == 0 ? 1 : 0
+  count = data.aws_iam_role.ecs_execution_role.arn == "" ? 1 : 0
   name  = "ecs_execution_role"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -34,13 +36,14 @@ resource "aws_iam_role" "ecs_execution_role" {
 
 # Attach Execution Policy
 resource "aws_iam_role_policy_attachment" "ecs_execution_policy" {
+  count      = data.aws_iam_role.ecs_execution_role.arn == "" ? 1 : 0
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
   role       = coalesce(aws_iam_role.ecs_execution_role[0].name, data.aws_iam_role.ecs_execution_role.name)
 }
 
-# ECS Task Role
+# ECS Task Role (Creating if it doesn't exist)
 resource "aws_iam_role" "ecs_task_role" {
-  count = length(data.aws_iam_role.ecs_task_role.id) == 0 ? 1 : 0
+  count = data.aws_iam_role.ecs_task_role.arn == "" ? 1 : 0
   name  = "ecs_task_role"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
