@@ -75,5 +75,5 @@ resource "aws_ecs_service" "strapi" {
 }
 
 resource "aws_eip" "strapi" {
-  vpc = true
+  domain = "vpc"
 }
