@@ -3,11 +3,11 @@ resource "aws_route53_zone" "main" {
 }
 
 resource "aws_route53_record" "strapi" {
-  zone_id = Z06607023RJWXGXD2ZL6M
-  name    = "togaruashok1996"  # Replace with your desired subdomain
+  zone_id = aws_route53_zone.main.id  # Dynamically reference the zone ID from aws_route53_zone.main
+  name    = "togaruashok1996-ecs"  # Replace with your desired subdomain
   type    = "A"
   ttl     = 300
-  records = [aws_eip.strapi.public_ip]
+  records = [aws_eip.strapi.public_ip]  # Reference the Elastic IP created in ecs.tf
 }
 
 output "route53_zone_id" {
