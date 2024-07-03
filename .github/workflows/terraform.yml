@@ -25,6 +25,10 @@ jobs:
           aws-secret-access-key: ${{ secrets.ASHOK_AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
+      - name: Initialize Terraform
+        run: terraform init
+        working-directory: ./terraform  # Update this path if necessary
+
       - name: Terraform destroy
         run: terraform destroy
         working-directory: ./terraform  # Update this path if necessary
