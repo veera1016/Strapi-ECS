@@ -1,9 +1,9 @@
 resource "aws_ecs_cluster" "this" {
-  name = "strapi-cluster"
+  name = "Ashok-strapi-cluster"
 }
 
-resource "aws_iam_role" "ecs_execution_role" {
-  name = "ecs_execution_role"
+resource "aws_iam_role" "ecs_execution_role_new" {
+  name = "ecs_execution_role_new"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -20,11 +20,11 @@ resource "aws_iam_role" "ecs_execution_role" {
 
 resource "aws_iam_role_policy_attachment" "ecs_execution_policy" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
-  role       = aws_iam_role.ecs_execution_role.name
+  role       = aws_iam_role.ecs_execution_role_new.name
 }
 
-resource "aws_iam_role" "ecs_task_role" {
-  name = "ecs_task_role"
+resource "aws_iam_role" "ecs_task_role_new" {
+  name = "ecs_task_role_new"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -40,9 +40,9 @@ resource "aws_iam_role" "ecs_task_role" {
 }
 
 resource "aws_ecs_task_definition" "strapi" {
-  family                   = "strapi-task"
-  execution_role_arn       = aws_iam_role.ecs_execution_role.arn
-  task_role_arn            = aws_iam_role.ecs_task_role.arn
+  family                   = "Ashok-strapi-task"
+  execution_role_arn       = aws_iam_role.ecs_execution_role_new.arn
+  task_role_arn            = aws_iam_role.ecs_task_role_new.arn
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   cpu                      = "512"
@@ -62,7 +62,7 @@ resource "aws_ecs_task_definition" "strapi" {
 }
 
 resource "aws_ecs_service" "strapi" {
-  name            = "strapi-service"
+  name            = "Ashok-strapi-service"
   cluster         = aws_ecs_cluster.this.id
   task_definition = aws_ecs_task_definition.strapi.arn
   desired_count   = 1
