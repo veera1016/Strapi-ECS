@@ -1,15 +1,13 @@
-resource "aws_route53_zone" "main" {
-  name = "contentecho.in"  # Replace with your domain
+# Create a Route 53 hosted zone (if you don't have one)
+resource "aws_route53_zone" "example" {
+  name = "contentecho.in."  # Replace with your domain name
 }
 
-resource "aws_route53_record" "strapi_subdomain" {
-  zone_id = aws_route53_zone.main.id
-  name    = "togaruashok1996Ecs"  # Replace with your desired subdomain
+# Create a Route 53 A record pointing to your ECS service
+resource "aws_route53_record" "example" {
+  zone_id = Z06607023RJWXGXD2ZL6M
+  name    = "togaruashok1996.contentecho.in"  # Replace with your subdomain
   type    = "A"
-  ttl     = 300
-  records = [aws_eip.strapi.public_ip]  # Use the correct EIP resource here
-}
-
-output "route53_zone_id" {
-  value = aws_route53_zone.main.id
+  ttl     = "300"
+  records = [aws_ecs_service.example.network_configuration[0].assign_public_ip]  # Or a fixed IP if you're using a static IP setup
 }
