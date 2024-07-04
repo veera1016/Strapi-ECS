@@ -4,8 +4,8 @@ resource "aws_ecs_cluster" "this" {
 
 resource "aws_ecs_task_definition" "strapi" {
   family                   = "strapi-task"
-  execution_role_arn       = aws_iam_role.ecs_execution_role_new_unique.arn
-  task_role_arn            = aws_iam_role.ecs_task_role_new_unique.arn
+  execution_role_arn       = "arn:aws:iam::533266978173:role/ECS-execution-role"
+  task_role_arn            = "arn:aws:iam::533266978173:role/ECS-task-role"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   cpu                      = "512"
