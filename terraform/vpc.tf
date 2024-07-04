@@ -32,6 +32,6 @@ resource "aws_security_group" "ecs" {
   }
 }
 
-resource "aws_eip_ashok" "strapi" {
+resource "aws_eip" "strapi" {
   vpc = true
 }
